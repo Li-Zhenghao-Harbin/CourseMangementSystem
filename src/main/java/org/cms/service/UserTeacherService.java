@@ -1,7 +1,7 @@
 package org.cms.service;
 
-import org.cms.dataobject.UserTeacher;
+import org.cms.dataobject.UserTeacherDO;
 
 public interface UserTeacherService {
-    public UserTeacher getUserTeacherById(int id);
+    public UserTeacherDO getUserTeacherById(int id);
 }

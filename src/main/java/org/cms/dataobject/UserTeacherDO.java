@@ -1,6 +1,6 @@
 package org.cms.dataobject;
 
-public class UserTeacher {
+public class UserTeacherDO {
     private Integer id;
 
     private String name;

@@ -1,7 +1,7 @@
 package org.cms.service.impl;
 
-import org.cms.dao.UserTeacherMapper;
-import org.cms.dataobject.UserTeacher;
+import org.cms.dao.UserTeacherDOMapper;
+import org.cms.dataobject.UserTeacherDO;
 import org.cms.service.UserTeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 public class UserTeacherServiceImpl implements UserTeacherService {
 
     @Autowired
-    private UserTeacherMapper userTeacherMapper;
+    private UserTeacherDOMapper userTeacherDOMapper;
 
     @Override
-    public UserTeacher getUserTeacherById(int id) {
-        return userTeacherMapper.selectByPrimaryKey(id);
+    public UserTeacherDO getUserTeacherById(int id) {
+        return userTeacherDOMapper.selectByPrimaryKey(id);
     }
 }
