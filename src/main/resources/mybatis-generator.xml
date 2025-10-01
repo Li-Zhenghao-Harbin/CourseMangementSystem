@@ -33,6 +33,6 @@
         </javaClientGenerator>
 
         <!-- 指定要生成代码的表 -->
-        <table schema="" tableName="lesson" domainObjectName="LessonDO"/>
+        <table schema="" tableName="user_student" domainObjectName="UserStudentDO"/>
     </context>
 </generatorConfiguration>
