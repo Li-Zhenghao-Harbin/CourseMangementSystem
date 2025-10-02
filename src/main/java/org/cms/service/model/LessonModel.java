@@ -3,6 +3,7 @@ package org.cms.service.model;
 public class LessonModel {
     private Integer id;
     private Integer courseId;
+    private String courseName;
     private Integer lessonNumber;
     private String date;
     private String startTime;
@@ -54,5 +55,13 @@ public class LessonModel {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 }

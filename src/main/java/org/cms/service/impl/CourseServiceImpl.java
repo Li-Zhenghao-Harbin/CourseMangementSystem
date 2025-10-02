@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.security.KeyStore;
+import java.util.*;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -47,6 +47,41 @@ public class CourseServiceImpl implements CourseService {
         return courses;
     }
 
+    @Override
+    @Transactional
+    public List<CourseModel> getCoursesByDate(String startDate, String endDate) {
+        List<LessonDO> lessonDOs = lessonDOMapper.getLessonsByDate(startDate, endDate);
+        List<LessonModel> lessonModels = convertFromLessonDOs(lessonDOs);
+        // 根据Lesson获取对应的Course
+        List<CourseModel> courses = new ArrayList<>();
+        Map<Integer, List<LessonModel>> lessonModelMap = new HashMap<>();
+        for (LessonModel lessonModel : lessonModels) {
+            if (!lessonModelMap.containsKey(lessonModel.getCourseId())) {
+                List<LessonModel> lessonModelList = new ArrayList<>();
+                lessonModelList.add(lessonModel);
+                lessonModelMap.put(lessonModel.getCourseId(), lessonModelList);
+            } else {
+                lessonModelMap.get(lessonModel.getCourseId()).add(lessonModel);
+            }
+        }
+        for (HashMap.Entry<Integer, List<LessonModel>> entry : lessonModelMap.entrySet()) {
+            CourseDO courseDO = courseDOMapper.selectByPrimaryKey(entry.getKey());
+            CourseModel courseModel = convertFromCourseDO(courseDO);
+            courseModel.setLessons(entry.getValue());
+            courses.add(courseModel);
+        }
+//        Set<Integer> courseIdSet = new HashSet<>();
+//        for (LessonModel lessonModel : lessonModels) {
+//            courseIdSet.add(lessonModel.getCourseId());
+//        }
+//        courseIdSet.forEach(id -> {
+//           CourseDO courseDO = courseDOMapper.selectByPrimaryKey(id);
+//           CourseModel courseModel = convertFromCourseDO(courseDO);
+//           courses.add(courseModel);
+//        });
+        return courses;
+    }
+
     private CourseDO convertFromCourseModel(CourseModel courseModel) {
         CourseDO courseDO = new CourseDO();
         BeanUtils.copyProperties(courseModel, courseDO);
@@ -62,6 +97,12 @@ public class CourseServiceImpl implements CourseService {
             lessonDOs.add(lessonDO);
         }
         return lessonDOs;
+    }
+
+    private CourseModel convertFromCourseDO(CourseDO courseDO) {
+        CourseModel courseModel = new CourseModel();
+        BeanUtils.copyProperties(courseDO, courseModel);
+        return courseModel;
     }
 
     private List<CourseModel> convertFromCourseDOs(List<CourseDO> courseDOs) {

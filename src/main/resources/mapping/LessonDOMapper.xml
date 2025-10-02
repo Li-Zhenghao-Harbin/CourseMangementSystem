@@ -42,19 +42,15 @@
   <select id="getLessonsByCourseId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, course_id, lesson_number, date, start_time, end_time from lesson where course_id = #{courseId}
   </select>
-<!--  <select id="getLessons" resultMap="BaseResultMap">-->
-<!--    select id, course_id, date, start_time, end_time from lesson where 1=1-->
-<!--    <if test = "id != null and id != ''">-->
-<!--      and id = #{id}-->
-<!--    </if>-->
-<!--    <if test = "teacherId != null and teacherId != ''">-->
-<!--      and teacher_id = #{teacherId}-->
-<!--    </if>-->
-<!--    <if test = "#startDate != null and #startDate != ''">-->
-<!--      and date &gt;= strftime('%Y-%m-%d', #{#startDate})-->
-<!--    </if>-->
-<!--    <if test = "#endDate != null and #endDate != ''">-->
-<!--      and date &gt;= strftime('%Y-%m-%d', #{#endDate})-->
-<!--    </if>-->
-<!--  </select>-->
+  <select id="getLessonsByDate" parameterType="org.cms.dataobject.CourseDO" resultMap="BaseResultMap">
+    select id, course_id, date, start_time, end_time
+    from lesson
+    where 1=1
+    <if test = "startDate != null and startDate != ''">
+      and date &gt;= strftime('%Y-%m-%d', #{startDate})
+    </if>
+    <if test = "endDate != null and endDate != ''">
+      and date &lt;= strftime('%Y-%m-%d', #{endDate})
+    </if>
+  </select>
 </mapper>

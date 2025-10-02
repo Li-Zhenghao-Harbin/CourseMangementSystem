@@ -15,4 +15,6 @@ public interface LessonDOMapper {
     int updateByPrimaryKey(LessonDO record);
 
     List<LessonDO> getLessonsByCourseId(Integer courseId);
+
+    List<LessonDO> getLessonsByDate(String startDate, String endDate);
 }
