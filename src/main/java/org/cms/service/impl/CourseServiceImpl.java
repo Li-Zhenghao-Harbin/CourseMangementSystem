@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.KeyStore;
 import java.util.*;
 
 @Service
@@ -40,7 +39,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
     public List<CourseModel> getCourses(int courseId, String courseName, int teacherId, String teacherName) {
         List<CourseDO> courseDOs = courseDOMapper.getCourses(courseId, courseName, teacherId, teacherName);
         List<CourseModel> courses = convertFromCourseDOs(courseDOs);
@@ -70,15 +69,6 @@ public class CourseServiceImpl implements CourseService {
             courseModel.setLessons(entry.getValue());
             courses.add(courseModel);
         }
-//        Set<Integer> courseIdSet = new HashSet<>();
-//        for (LessonModel lessonModel : lessonModels) {
-//            courseIdSet.add(lessonModel.getCourseId());
-//        }
-//        courseIdSet.forEach(id -> {
-//           CourseDO courseDO = courseDOMapper.selectByPrimaryKey(id);
-//           CourseModel courseModel = convertFromCourseDO(courseDO);
-//           courses.add(courseModel);
-//        });
         return courses;
     }
 
@@ -105,6 +95,7 @@ public class CourseServiceImpl implements CourseService {
         return courseModel;
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     private List<CourseModel> convertFromCourseDOs(List<CourseDO> courseDOs) {
         List<CourseModel> courseModels = new ArrayList<>();
         for (CourseDO courseDO : courseDOs) {
@@ -115,7 +106,6 @@ public class CourseServiceImpl implements CourseService {
             List<LessonDO> lessonDOs = lessonDOMapper.getLessonsByCourseId(courseId);
             List<LessonModel> lessonModels = convertFromLessonDOs(lessonDOs);
             courseModel.setLessons(lessonModels);
-
             courseModels.add(courseModel);
         }
         return courseModels;

@@ -57,7 +57,6 @@
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
-
       <!-- Spring Boot Maven Plugin -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
