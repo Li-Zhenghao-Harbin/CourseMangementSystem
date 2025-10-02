@@ -39,4 +39,15 @@ public class UserStudentController {
         userStudentService.enroll(courseEnrollmentDO);
         return CommonReturnType.create(null);
     }
+
+    @RequestMapping(value = "/unenroll", method = {RequestMethod.POST}, consumes = {CONTENT_TYPE_FORMED})
+    @ResponseBody
+    public CommonReturnType unenroll(@RequestParam(name = "studentId") Integer studentId,
+                                     @RequestParam(name = "courseId") Integer courseId) {
+        CourseEnrollmentDO courseEnrollmentDO = new CourseEnrollmentDO();
+        courseEnrollmentDO.setStudentId(studentId);
+        courseEnrollmentDO.setCourseId(courseId);
+        userStudentService.unenroll(courseEnrollmentDO);
+        return CommonReturnType.create(null);
+    }
 }

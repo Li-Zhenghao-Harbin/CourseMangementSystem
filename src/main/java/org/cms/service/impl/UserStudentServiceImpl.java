@@ -26,7 +26,12 @@ public class UserStudentServiceImpl implements UserStudentService {
 
     @Override
     public void enroll(CourseEnrollmentDO courseEnrollmentDO) {
-        courseEnrollmentDOMapper.insert(courseEnrollmentDO);
+        courseEnrollmentDOMapper.enroll(courseEnrollmentDO);
+    }
+
+    @Override
+    public void unenroll(CourseEnrollmentDO courseEnrollmentDO) {
+        courseEnrollmentDOMapper.unenroll(courseEnrollmentDO);
     }
 
     private UserStudentDO convertFromUserStudentModel(UserStudentModel userStudentModel) {

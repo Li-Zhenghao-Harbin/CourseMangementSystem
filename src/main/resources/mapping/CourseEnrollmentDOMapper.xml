@@ -6,11 +6,14 @@
     <result column="course_id" jdbcType="INTEGER" property="courseId" />
     <result column="student_id" jdbcType="INTEGER" property="studentId" />
   </resultMap>
-  <insert id="insert" parameterType="org.cms.dataobject.CourseEnrollmentDO">
+  <insert id="enroll" parameterType="org.cms.dataobject.CourseEnrollmentDO">
     insert into course_enrollment (id, course_id, student_id
       )
     values (#{id,jdbcType=INTEGER}, #{courseId,jdbcType=INTEGER}, #{studentId,jdbcType=INTEGER}
       )
+  </insert>
+  <insert id="unenroll" parameterType="org.cms.dataobject.CourseEnrollmentDO">
+    delete from course_enrollment where course_id = #{courseId,jdbcType=INTEGER} and student_id = #{studentId,jdbcType=INTEGER}
   </insert>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, course_id, student_id

@@ -4,7 +4,9 @@ import java.util.List;
 import org.cms.dataobject.CourseEnrollmentDO;
 
 public interface CourseEnrollmentDOMapper {
-    int insert(CourseEnrollmentDO record);
+    int enroll(CourseEnrollmentDO record);
+
+    int unenroll(CourseEnrollmentDO record);
 
     List<CourseEnrollmentDO> selectAll();
 }
