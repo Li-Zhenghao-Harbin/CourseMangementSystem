@@ -53,4 +53,14 @@ public class CourseController {
         courseService.addCourseSchedule(lessons);
         return CommonReturnType.create(null);
     }
+
+    @RequestMapping(value = "/getCourses", method = {RequestMethod.GET}, consumes = {CONTENT_TYPE_FORMED})
+    @ResponseBody
+    public CommonReturnType getCourses(@RequestParam(name = "courseId", required = false, defaultValue = "-1") Integer courseId,
+                                      @RequestParam(name = "courseName", required = false, defaultValue = "") String courseName,
+                                      @RequestParam(name = "teacherId", required = false, defaultValue = "-1") Integer teacherId,
+                                      @RequestParam(name = "teacherName", required = false, defaultValue = "") String teacherName) {
+        List<CourseModel> courses = courseService.getCourses(courseId, courseName, teacherId, teacherName);
+        return CommonReturnType.create(courses);
+    }
 }

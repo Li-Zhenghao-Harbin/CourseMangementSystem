@@ -31,4 +31,16 @@
     select id, course_name, teacher_id, add_time
     from course
   </select>
+  <select id="getCourses" parameterType="org.cms.dataobject.CourseDO" resultMap="BaseResultMap">
+    select id, course_name, teacher_id, add_time from course where 1=1
+    <if test = "courseId != -1">
+      and id = #{courseId}
+    </if>
+    <if test = "courseName != null and courseName != ''">
+      and course_name = #{courseName}
+    </if>
+    <if test = "teacherId != -1">
+      and teacher_id = #{teacherId}
+    </if>
+  </select>
 </mapper>

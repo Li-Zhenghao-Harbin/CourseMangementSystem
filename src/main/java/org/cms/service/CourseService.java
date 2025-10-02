@@ -8,4 +8,5 @@ import java.util.List;
 public interface CourseService {
     void registerCourse(CourseModel courseModel);
     void addCourseSchedule(List<LessonModel> lessonModels);
+    List<CourseModel> getCourses(int courseId, String courseName, int teacherId, String teacherName);
 }

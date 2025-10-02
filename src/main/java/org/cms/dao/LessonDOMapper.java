@@ -13,4 +13,6 @@ public interface LessonDOMapper {
     List<LessonDO> selectAll();
 
     int updateByPrimaryKey(LessonDO record);
+
+    List<LessonDO> getLessonsByCourseId(Integer courseId);
 }

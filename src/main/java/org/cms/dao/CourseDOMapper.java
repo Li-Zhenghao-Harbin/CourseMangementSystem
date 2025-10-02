@@ -13,4 +13,6 @@ public interface CourseDOMapper {
     List<CourseDO> selectAll();
 
     int updateByPrimaryKey(CourseDO record);
+
+    List<CourseDO> getCourses(int courseId, String courseName, int teacherId, String teacherName);
 }
