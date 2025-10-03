@@ -25,8 +25,8 @@ public class UserStudentServiceImpl implements UserStudentService {
     }
 
     @Override
-    public void remove(int studentId) {
-        userStudentDOMapper.deleteByPrimaryKey(studentId);
+    public void remove(String studentName) {
+        userStudentDOMapper.deleteByStudentName(studentName);
     }
 
     @Override

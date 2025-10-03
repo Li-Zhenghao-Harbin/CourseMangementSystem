@@ -31,8 +31,8 @@ public class UserStudentController {
 
     @RequestMapping(value = "/remove", method = {RequestMethod.POST}, consumes = {CONTENT_TYPE_FORMED})
     @ResponseBody
-    public CommonReturnType remove(@RequestParam(name = "studentId") Integer studentId) {
-        userStudentService.remove(studentId);
+    public CommonReturnType remove(@RequestParam(name = "studentName") String studentName) {
+        userStudentService.remove(studentName);
         return CommonReturnType.create(null);
     }
 

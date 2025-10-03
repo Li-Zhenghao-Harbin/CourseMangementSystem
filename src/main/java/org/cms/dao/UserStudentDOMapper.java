@@ -13,4 +13,6 @@ public interface UserStudentDOMapper {
     List<UserStudentDO> selectAll();
 
     int updateByPrimaryKey(UserStudentDO record);
+
+    int deleteByStudentName(String studentName);
 }

@@ -27,4 +27,7 @@
     select id, name
     from user_student
   </select>
+  <delete id="deleteByStudentName" parameterType="java.lang.String">
+    delete from user_student where name = #{studentName}
+  </delete>
 </mapper>
