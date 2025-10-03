@@ -53,4 +53,7 @@
       and date &lt;= strftime('%Y-%m-%d', #{endDate})
     </if>
   </select>
+  <select id="deleteByCourseId" parameterType="java.lang.Integer">
+    delete from lesson where course_id = #{courseId}
+  </select>
 </mapper>

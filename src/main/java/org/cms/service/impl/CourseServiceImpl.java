@@ -72,6 +72,11 @@ public class CourseServiceImpl implements CourseService {
         return courses;
     }
 
+    @Override
+    public void removeCourse(int courseId) {
+        courseDOMapper.deleteByPrimaryKey(courseId);
+    }
+
     private CourseDO convertFromCourseModel(CourseModel courseModel) {
         CourseDO courseDO = new CourseDO();
         BeanUtils.copyProperties(courseModel, courseDO);

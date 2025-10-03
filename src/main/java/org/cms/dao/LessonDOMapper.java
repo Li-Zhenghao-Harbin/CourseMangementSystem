@@ -17,4 +17,6 @@ public interface LessonDOMapper {
     List<LessonDO> getLessonsByCourseId(Integer courseId);
 
     List<LessonDO> getLessonsByDate(String startDate, String endDate);
+
+    int deleteByCourseId(Integer courseId);
 }

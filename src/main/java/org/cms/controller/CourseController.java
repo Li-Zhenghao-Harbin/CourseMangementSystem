@@ -25,11 +25,18 @@ public class CourseController {
     @RequestMapping(value = "/register", method = {RequestMethod.POST}, consumes = {CONTENT_TYPE_FORMED})
     @ResponseBody
     public CommonReturnType register(@RequestParam(name = "courseName") String courseName,
-                         @RequestParam(name = "teacherId") Integer teacherId) {
+                                     @RequestParam(name = "teacherId") Integer teacherId) {
         CourseModel courseModel = new CourseModel();
         courseModel.setCourseName(courseName);
         courseModel.setTeacherId(teacherId);
         courseService.registerCourse(courseModel);
+        return CommonReturnType.create(null);
+    }
+
+    @RequestMapping(value = "/remove", method = {RequestMethod.POST}, consumes = {CONTENT_TYPE_FORMED})
+    @ResponseBody
+    public CommonReturnType remove(@RequestParam(name = "courseId") Integer courseId) {
+        courseService.removeCourse(courseId);
         return CommonReturnType.create(null);
     }
 
