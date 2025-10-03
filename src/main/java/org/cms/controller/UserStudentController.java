@@ -29,6 +29,13 @@ public class UserStudentController {
         return CommonReturnType.create(null);
     }
 
+    @RequestMapping(value = "/remove", method = {RequestMethod.POST}, consumes = {CONTENT_TYPE_FORMED})
+    @ResponseBody
+    public CommonReturnType remove(@RequestParam(name = "studentId") Integer studentId) {
+        userStudentService.remove(studentId);
+        return CommonReturnType.create(null);
+    }
+
     @RequestMapping(value = "/enroll", method = {RequestMethod.POST}, consumes = {CONTENT_TYPE_FORMED})
     @ResponseBody
     public CommonReturnType enroll(@RequestParam(name = "studentId") Integer studentId,

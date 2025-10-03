@@ -25,6 +25,11 @@ public class UserStudentServiceImpl implements UserStudentService {
     }
 
     @Override
+    public void remove(int studentId) {
+        userStudentDOMapper.deleteByPrimaryKey(studentId);
+    }
+
+    @Override
     public void enroll(CourseEnrollmentDO courseEnrollmentDO) {
         courseEnrollmentDOMapper.enroll(courseEnrollmentDO);
     }
