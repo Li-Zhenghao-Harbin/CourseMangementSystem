@@ -43,6 +43,13 @@ public class CourseServiceImpl implements CourseService {
     public List<CourseModel> getCourses(int courseId, String courseName, int teacherId, String teacherName) {
         List<CourseDO> courseDOs = courseDOMapper.getCourses(courseId, courseName, teacherId, teacherName);
         List<CourseModel> courses = convertFromCourseDOs(courseDOs);
+        for (CourseModel courseModel : courses) {
+            // 设置Lesson的courseName
+            String actualCourseName = courseModel.getCourseName();
+            courseModel.getLessons().forEach(lesson -> {
+                lesson.setCourseName(actualCourseName);
+            });
+        }
         return courses;
     }
 
@@ -67,6 +74,11 @@ public class CourseServiceImpl implements CourseService {
             CourseDO courseDO = courseDOMapper.selectByPrimaryKey(entry.getKey());
             CourseModel courseModel = convertFromCourseDO(courseDO);
             courseModel.setLessons(entry.getValue());
+            // 设置Lesson的courseName
+            String courseName = courseModel.getCourseName();
+            courseModel.getLessons().forEach(lesson -> {
+                lesson.setCourseName(courseName);
+            });
             courses.add(courseModel);
         }
         return courses;
