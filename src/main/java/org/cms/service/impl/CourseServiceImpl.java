@@ -89,6 +89,13 @@ public class CourseServiceImpl implements CourseService {
         courseDOMapper.deleteByPrimaryKey(courseId);
     }
 
+    @Override
+    public List<LessonModel> getLessons(int courseId, String startDate, String endDate, String startTime, String endTime) {
+        List<LessonDO> lessonDOS = lessonDOMapper.getLessons(courseId, startDate, endDate, startTime, endTime);
+        List<LessonModel> lessonModels = convertFromLessonDOs(lessonDOS);
+        return lessonModels;
+    }
+
     private CourseDO convertFromCourseModel(CourseModel courseModel) {
         CourseDO courseDO = new CourseDO();
         BeanUtils.copyProperties(courseModel, courseDO);
@@ -120,7 +127,7 @@ public class CourseServiceImpl implements CourseService {
             BeanUtils.copyProperties(courseDO, courseModel);
             // 获取Lesson
             int courseId = courseDO.getId();
-            List<LessonDO> lessonDOs = lessonDOMapper.getLessonsByCourseId(courseId);
+            List<LessonDO> lessonDOs = lessonDOMapper.getLessons(courseId, "", "", "", "");
             List<LessonModel> lessonModels = convertFromLessonDOs(lessonDOs);
             courseModel.setLessons(lessonModels);
             courseModels.add(courseModel);

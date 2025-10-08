@@ -11,4 +11,5 @@ public interface CourseService {
     List<CourseModel> getCourses(int courseId, String courseName, int teacherId, String teacherName);
     List<CourseModel> getCoursesByDate(String startDate, String endDate);
     void removeCourse(int courseId);
+    List<LessonModel> getLessons(int courseId, String startDate, String endDate, String startTime, String endTime);
 }

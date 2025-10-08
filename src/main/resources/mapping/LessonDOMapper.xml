@@ -39,8 +39,16 @@
     select id, course_id, lesson_number, date, start_time, end_time
     from lesson
   </select>
-  <select id="getLessonsByCourseId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, course_id, lesson_number, date, start_time, end_time from lesson where course_id = #{courseId}
+  <select id="getLessons" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, course_id, lesson_number, date, start_time, end_time
+    from lesson
+    where course_id = #{courseId}
+    <if test = "startDate != null and startDate != ''">
+      and date &gt;= strftime('%Y-%m-%d', #{startDate})
+    </if>
+    <if test = "endDate != null and endDate != ''">
+      and date &lt;= strftime('%Y-%m-%d', #{endDate})
+    </if>
   </select>
   <select id="getLessonsByDate" parameterType="org.cms.dataobject.CourseDO" resultMap="BaseResultMap">
     select id, course_id, lesson_number, date, start_time, end_time

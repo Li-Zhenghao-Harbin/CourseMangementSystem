@@ -77,4 +77,15 @@ public class CourseController {
         List<CourseModel> courses = courseService.getCoursesByDate(startDate, endDate);
         return CommonReturnType.create(courses);
     }
+
+    @RequestMapping(value = "/getLessons", method = {RequestMethod.GET}, consumes = {CONTENT_TYPE_FORMED})
+    @ResponseBody
+    public CommonReturnType getLessons(@RequestParam(name = "courseId", required = true) Integer courseId,
+                                       @RequestParam(name = "startDate", required = false, defaultValue = "") String startDate,
+                                       @RequestParam(name = "endDate", required = false, defaultValue = "") String endDate,
+                                       @RequestParam(name = "startTime", required = false, defaultValue = "") String startTime,
+                                       @RequestParam(name = "endTime", required = false, defaultValue = "") String endTime) {
+        List<LessonModel> lessons = courseService.getLessons(courseId, startDate, endDate, startTime, endTime);
+        return CommonReturnType.create(lessons);
+    }
 }
