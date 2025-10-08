@@ -92,8 +92,6 @@
         </div>
     </div>
 
-
-
     <!-- 然后按正确顺序引入组件 -->
     <script src="js/common-utils.js" type="text/javascript"></script>
     <script src="js/week-navigation.js" type="text/javascript"></script>
@@ -102,75 +100,30 @@
 
     <!-- 最后初始化应用 -->
     <script>
-        // 设置课程数据
-        const courseData = {
-            "status": "success",
-            "data": [
-                {
-                    "id": 1,
-                    "courseName": "Math",
-                    "teacherId": 1,
-                    "addTime": "2025-10-01 21:17:20",
-                    "lessons": [
-                        {
-                            "id": 1,
-                            "courseId": 1,
-                            "courseName": "Math",
-                            "lessonNumber": 1,
-                            "date": "2025-09-22",
-                            "startTime": "08:00:00",
-                            "endTime": "10:00:00"
-                        },
-                        {
-                            "id": 2,
-                            "courseId": 1,
-                            "courseName": "Math",
-                            "lessonNumber": 2,
-                            "date": "2025-09-22",
-                            "startTime": "12:00:00",
-                            "endTime": "14:00:00"
-                        }
-                    ]
+        // 课程数据
+        let courseData = {};
+        window.onload = function() {
+            $.ajax({
+                type:"GET",
+                url:"http://localhost:8083/course/getCoursesByDate",
+                contentType:"application/x-www-form-urlencoded",
+                data:{
+                    "startDate": window.weekNavigation.getCurrentWeekInfo().weekDays[0].formattedDate,
+                    "endDate": window.weekNavigation.getCurrentWeekInfo().weekDays[6].formattedDate,
                 },
-                {
-                    "id": 2,
-                    "courseName": "English",
-                    "teacherId": 1,
-                    "addTime": "2025-10-02 13:48:21",
-                    "lessons": [
-                        {
-                            "id": 4,
-                            "courseId": 2,
-                            "courseName": "English",
-                            "lessonNumber": 2,
-                            "date": "2025-09-02",
-                            "startTime": "21:00:00",
-                            "endTime": "22:00:00"
-                        }
-                    ]
+                xhrFields:{withCredentials:true},
+                success:function(data){
+                    if (data.status=="success") {
+                        courseData = data;
+                        window.courseTimetable.setCourseData(courseData);
+                    }else{
+                        alert("数据加载失败，因为 "+data.responseText);
+                    }
                 },
-                {
-                    "id": 3,
-                    "courseName": "pe",
-                    "teacherId": 1,
-                    "addTime": "2025-10-03 14:37:29",
-                    "lessons": [
-                        {
-                            "id": 14,
-                            "courseId": 3,
-                            "courseName": "pe",
-                            "lessonNumber": 2,
-                            "date": "2025-09-02",
-                            "startTime": "21:00:00",
-                            "endTime": "22:00:00"
-                        }
-                    ]
+                error:function(data){
+                    alert("数据加载失败，因为 "+data.responseText);
                 }
-            ]
-        };
-
-        function initTable() {
-            
+            });
         }
         // 等待所有组件加载完成
         window.addEventListener('load', function() {
@@ -196,7 +149,7 @@
                         
                         // 设置课程数据
                         window.courseTimetable.setCourseData(courseData);
-                        
+
                         // 设置当前周的日期
                         const currentWeek = window.weekNavigation.getCurrentWeekInfo();
                         window.courseTimetable.setCurrentWeekDays(currentWeek.weekDays);
@@ -219,22 +172,6 @@
             
             // 开始初始化
             safeInitializeApp();
-        });
-        $("#nextWeek").on("click", function() {
-            // 设置课程数据
-            window.courseTimetable.setCourseData(courseData);
-            
-            // 设置当前周的日期
-            const currentWeek = window.weekNavigation.getCurrentWeekInfo();
-            window.courseTimetable.setCurrentWeekDays(currentWeek.weekDays);
-        });
-        $("#prevWeek").on("click", function() {
-            // 设置课程数据
-            window.courseTimetable.setCourseData(courseData);
-            
-            // 设置当前周的日期
-            const currentWeek = window.weekNavigation.getCurrentWeekInfo();
-            window.courseTimetable.setCurrentWeekDays(currentWeek.weekDays);
         });
     </script>
 </body>

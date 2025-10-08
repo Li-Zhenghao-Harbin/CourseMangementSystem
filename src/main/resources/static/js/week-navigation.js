@@ -28,6 +28,28 @@ class WeekNavigation {
         if (this.currentWeekOffset > this.minWeekOffset) {
             this.currentWeekOffset--;
             this.updateDisplay();
+            $.ajax({
+                type:"GET",
+                url:"http://localhost:8083/course/getCoursesByDate",
+                contentType:"application/x-www-form-urlencoded",
+                data:{
+                    "startDate": window.weekNavigation.getCurrentWeekInfo().weekDays[0].formattedDate,
+                    "endDate": window.weekNavigation.getCurrentWeekInfo().weekDays[6].formattedDate,
+                },
+                xhrFields:{withCredentials:true},
+                success:function(data){
+                    if (data.status=="success") {
+                        // data为获取的数据
+                        courseData = data;
+                        window.courseTimetable.setCourseData(courseData);
+                    }else{
+                        alert("数据加载失败，因为 "+data.responseText);
+                    }
+                },
+                error:function(data){
+                    alert("数据加载失败，因为 "+data.responseText);
+                }
+            });
         }
         this.updateButtonStates();
     }
@@ -37,6 +59,28 @@ class WeekNavigation {
         if (this.currentWeekOffset < this.maxWeekOffset) {
             this.currentWeekOffset++;
             this.updateDisplay();
+            $.ajax({
+                type:"GET",
+                url:"http://localhost:8083/course/getCoursesByDate",
+                contentType:"application/x-www-form-urlencoded",
+                data:{
+                    "startDate": window.weekNavigation.getCurrentWeekInfo().weekDays[0].formattedDate,
+                    "endDate": window.weekNavigation.getCurrentWeekInfo().weekDays[6].formattedDate,
+                },
+                xhrFields:{withCredentials:true},
+                success:function(data){
+                    if (data.status=="success") {
+                        // data为获取的数据
+                        courseData = data;
+                        window.courseTimetable.setCourseData(courseData);
+                    }else{
+                        alert("数据加载失败，因为 "+data.responseText);
+                    }
+                },
+                error:function(data){
+                    alert("数据加载失败，因为 "+data.responseText);
+                }
+            });
         }
         this.updateButtonStates();
     }
