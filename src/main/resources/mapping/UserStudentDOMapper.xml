@@ -30,4 +30,15 @@
   <delete id="deleteByStudentName" parameterType="java.lang.String">
     delete from user_student where name = #{studentName}
   </delete>
+  <select id="getStudents" resultMap="BaseResultMap">
+    select id, name
+    from user_student
+    where 1=1
+    <if test = "studentId != null and studentId != ''">
+      and id = #{studentId}
+    </if>
+    <if test = "studentName != null and studentName != ''">
+      and name = #{studentName}
+    </if>
+  </select>
 </mapper>

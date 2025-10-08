@@ -5,10 +5,13 @@ import org.cms.dataobject.UserTeacherDO;
 import org.cms.response.CommonReturnType;
 import org.cms.service.UserStudentService;
 import org.cms.service.UserTeacherService;
+import org.cms.service.model.LessonModel;
 import org.cms.service.model.UserStudentModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static org.cms.controller.BaseController.CONTENT_TYPE_FORMED;
 
@@ -56,5 +59,13 @@ public class UserStudentController {
         courseEnrollmentDO.setCourseId(courseId);
         userStudentService.unenroll(courseEnrollmentDO);
         return CommonReturnType.create(null);
+    }
+
+    @RequestMapping(value = "/getStudents", method = {RequestMethod.GET}, consumes = {CONTENT_TYPE_FORMED})
+    @ResponseBody
+    public CommonReturnType getStudents(@RequestParam(name = "studentId", required = true) Integer studentId,
+                                        @RequestParam(name = "studentName", required = true) String studentName) {
+        List<UserStudentModel> students = userStudentService.getStudents(studentId, studentName);
+        return CommonReturnType.create(students);
     }
 }
