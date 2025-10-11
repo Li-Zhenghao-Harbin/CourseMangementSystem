@@ -63,8 +63,8 @@ public class UserStudentController {
 
     @RequestMapping(value = "/getStudents", method = {RequestMethod.GET}, consumes = {CONTENT_TYPE_FORMED})
     @ResponseBody
-    public CommonReturnType getStudents(@RequestParam(name = "studentId", required = true) Integer studentId,
-                                        @RequestParam(name = "studentName", required = true) String studentName) {
+    public CommonReturnType getStudents(@RequestParam(name = "studentId") Integer studentId,
+                                        @RequestParam(name = "studentName") String studentName) {
         List<UserStudentModel> students = userStudentService.getStudents(studentId, studentName);
         return CommonReturnType.create(students);
     }
